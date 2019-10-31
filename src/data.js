@@ -1,6 +1,7 @@
 export const NAME = 'Tendies';
 export const HEADER_TEXT = 'Wall street bets is always right';
-export const database_endpoint = '/localhost:8000/asdf';
+export const database_endpoint = 'http://127.0.0.1:8000/tick_data/';
+//export const database_endpoint = 'http://172.22.158.49:8000/tick_data/';
 
 export const navbar_items = [
 	["Search Specific Symbol", "/graphs"],
@@ -33,8 +34,8 @@ export const subreddits =
 	'r/finance'
 ]
 
-export const chartWidth = 2000;
-export const chartHeight = 700;
+export const chartWidth = 1000;
+export const chartHeight = 400;
 
 export const graphDataInit = [
 		                        {x: 2, y: 4},

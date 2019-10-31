@@ -16,12 +16,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 import * as Data from './data.js';
 
+import 'react-vis/dist/style.css';
+
 var regex = /\b(?!landing)\b\S+/i;
 const supportsHistory = 'pushState' in window.history;
 
 function App() {
   return (
     <div className="mainDiv">
+
       <Router forceRefresh={!supportsHistory}>    
         <div>
           <Route exact path="/" component={Home} />  

@@ -34,24 +34,25 @@ const MyDropDown = (props) => {
 
 	return (
 		<FormControl className={props.formControl} style={{width:200}}>
-        <InputLabel htmlFor="age-helper">{props.flavorText}</InputLabel>
-	        <Select
-	         value={active}
-	         onChange={(e) => {
-	         	setActive(e.target.value);
-	         	props.setItem(e.target.value);
-	         }}
-	          inputProps={{
-	            name: 'age',
-	            id: 'age-helper',
-	          }}
-	        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {genItems(props.items)}
-        </Select>
-      </FormControl>)
+	        <InputLabel htmlFor="age-helper">{props.flavorText}</InputLabel>
+		        <Select
+		         value={active}
+		         onChange={(e) => {
+		         	setActive(e.target.value);
+		         	props.setItem(e.target.value);
+		         }}
+		          inputProps={{
+		            name: 'age',
+		            id: 'age-helper',
+		          }}
+		        >
+	          <MenuItem value="">
+	            <em>None</em>
+	          </MenuItem>
+	          {genItems(props.items)}
+	        </Select>
+	      </FormControl>
+      )
 }
 
 export default MyDropDown;
