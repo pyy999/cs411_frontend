@@ -54,10 +54,10 @@ const Home = () => {
 
 	return( 
 		
-		<div id="homewrapper">
+		<div id="homewrapper"  className={classes.root}>
 			<Button onClick={call()}/>
 			<WelcomeHeader/>
-			<div className={classes.root}>
+			<div>
 		      <Grid container spacing={6} 
 					  direction="row"
 					  justify="center"

@@ -18,16 +18,18 @@ function Page({
     'page--prev': state && state.prev,
   })
   return (
-    <section 
-      className={cx}
-      style={{
-        color
-      }}
-    >
-      <div className="page__inner">
-        {children}
-      </div>
-    </section>
+    
+      <section 
+        className={cx}
+        style={{
+          color
+        }}
+      >
+        <div className="page__inner">
+          {children}
+        </div>
+      </section>
+
   );
 }
 

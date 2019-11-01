@@ -10,7 +10,7 @@ import * as Data from './data.js';
 import Page from './Page.jsx'
 import MyDropDown from './MyDropDown.jsx'
 import MyTextField from './MyLineEdit.jsx'
-import { PageHeader} from './WelcomeHeader.jsx'
+import {PageHeader} from './WelcomeHeader.jsx'
 
 import './styles.css'
 
@@ -26,15 +26,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Graphs = () => 
+const Delete = () => 
 {
 	const [symbol, setSymbol] = useState("");
 	const [subreddit, setSubreddit] = useState("");
-	const [timePeriod, setTimePeriod] = useState("");
 	const [startTime, setStartTime] = useState("");
 	const [endTime, setEndTime] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [nodata, setNodata] = useState(false);
 	const [graphData, setGraphData] = useState(Data.graphDataInit);
 	
 	const classes = useStyles();
@@ -47,13 +45,10 @@ const Graphs = () =>
 		if(subreddit === "" || subreddit === "All Subreddits"){
 			setSubreddit("all")
 		}
-		if(timePeriod === ""){
-			setTimePeriod("Last Week")
-		}
 
 		setLoading(true);
 
-		var endpoint = Data.database_endpoint + 
+		var endpoint = Data.delete_endpoint + 
 					symbol + 
 					"/" + startTime + 
 					"/" + endTime;
@@ -63,64 +58,14 @@ const Graphs = () =>
 		  .then(function(response) {
 		    return response.json();
 		  })
-		  .then(function(myJson) {
-
-		  	setNodata(true)
-		    //console.log(JSON.stringify(myJson));
-		    var data = [];
-		    myJson[symbol].forEach(function(e){
-		    	var date = e["date"];
-		    	var newdate = date.substring(5,7) + "/" + date.substring(8,10) + "/" + date.substring(0,4);
-		    	data.push({"x" : new Date(newdate), "y": e["close_price"]})
-		    	setNodata(false)
-		    });
-		    setGraphData(data);
-		  })
-		  .catch(function(error){
-		  	console.log(error);
-		  });
-		  
 		setLoading(false);
 	}
 
-	function genGraph () {
-		if(nodata){
-			return (<div>
-				<h1 style={{ color: 'black' }}> NO DATA FOUND </h1>
-				</div>)
-		}
-		if(loading)
-		{
-			return (<div>
-					<h1> LOADING </h1>
-					</div>)
-		}
-		else
-		{
-			return (
-
-				<XYPlot
-						xType='time'
-		                width={Data.chartWidth}
-		                height={Data.chartHeight}>
-		                <VerticalGridLines />
-		                <HorizontalGridLines / >
-		                <XAxis />
-		                <YAxis />
-		                <LineSeries
-
-				            fill="none"
-				            color="red"
-				            data={graphData}
-				          />
-	            	</XYPlot>)
-		}
-	}
 	var datePlaceholder = "YYYY-MM-DD"
 	return (
 		<Page>
 		    <div style={{textAlign: "center", background:'#fff', opacity:.7}}>
-		      <PageHeader text={Data.navbar_items[0][0]}/>
+		      <PageHeader text={Data.navbar_items[2][0]}/>
 			  <div style={{height:30}}/>
 			  <Grid container spacing={0}>
 		        <Grid item xs={12}>
@@ -138,19 +83,15 @@ const Graphs = () =>
 			      	<div style={{height:10}}/>
 			        <div style={{height:100}}>
 			      		<Button type="button" color="primary" onClick={sendQuery}>
-			      			<h2>Search</h2>
+			      			<h2>Run Delete Scriptt</h2>
 			      		</Button>
 					</div>
 
 		        </Grid>
 		       </Grid>
-		       <div style={{display:'flex', flexDirection:'column', alignItems:"center", justifyContent:"center"}}>
-			        {genGraph()}
-	            	<div style={{height:90}}/>
-            	</div>
-            	</div>
+		       </div>
 		</Page>
 	);
 }
 
-export default Graphs
+export default Delete

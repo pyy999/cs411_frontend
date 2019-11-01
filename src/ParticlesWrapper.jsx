@@ -28,7 +28,7 @@ return(<Particles
   }}
 style={{
         width: '100%',
-        background: `rgba(50, 20, 20, .2)` 
+        background: `rgba(100, 100, 100, 1)` 
  }}
 />
 

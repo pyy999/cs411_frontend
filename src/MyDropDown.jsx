@@ -46,7 +46,7 @@ const MyDropDown = (props) => {
 		            id: 'age-helper',
 		          }}
 		        >
-	          <MenuItem value="">
+	          <MenuItem value=" ">
 	            <em>None</em>
 	          </MenuItem>
 	          {genItems(props.items)}
