@@ -65,7 +65,7 @@ const Delete = () =>
 	return (
 		<Page>
 		    <div style={{textAlign: "center", background:'#fff', opacity:.7}}>
-		      <PageHeader text={Data.navbar_items[2][0]}/>
+		      <PageHeader text={Data.navbar_items[6][0]}/>
 			  <div style={{height:30}}/>
 			  <Grid container spacing={0}>
 		        <Grid item xs={12}>

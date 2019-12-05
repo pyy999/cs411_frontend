@@ -2,7 +2,6 @@ import React, { Component, useState} from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import {XYPlot, XAxis, YAxis, VerticalGridLines, HorizontalGridLines, LineSeries, LineSeriesCanvas} from 'react-vis'
 
 import * as Data from './data.js';
@@ -11,41 +10,38 @@ import Page from './Page.jsx'
 import MyDropDown from './MyDropDown.jsx'
 import MyTextField from './MyLineEdit.jsx'
 import { PageHeader} from './WelcomeHeader.jsx'
+import  genGraphPage from './GraphBase.jsx'
 
 import './styles.css'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
+
+function genQuery(symbol, startTime, endTime)
+{
+	return Data.tick_endpoint + 
+					"?stock_symbol=" + symbol + 
+					"&start_date=" + startTime + 
+					"&end_date=" + endTime;
+}
 
 
 const Graphs = () => 
 {
-	const [symbol, setSymbol] = useState("");
+	const [symbol, setSymbol] = useState("TSLA");
 	const [subreddit, setSubreddit] = useState("");
 	const [timePeriod, setTimePeriod] = useState("");
-	const [startTime, setStartTime] = useState("");
-	const [endTime, setEndTime] = useState("");
+	const [startTime, setStartTime] = useState("2018-12-12");
+	const [endTime, setEndTime] = useState("2019-12-12");
 	const [loading, setLoading] = useState(false);
 	const [nodata, setNodata] = useState(false);
 	const [graphData, setGraphData] = useState(Data.graphDataInit);
 	
-	const classes = useStyles();
+	const classes = Data.useStyles();
 
 	function sendQuery() 
 	{
+		console.log("called")
 		if(symbol === ""){
 			setSymbol("All Symbols")
-		}
-		if(subreddit === "" || subreddit === "All Subreddits"){
-			setSubreddit("all")
 		}
 		if(timePeriod === ""){
 			setTimePeriod("Last Week")
@@ -53,20 +49,15 @@ const Graphs = () =>
 
 		setLoading(true);
 
-		var endpoint = Data.database_endpoint + 
-					symbol + 
-					"/" + startTime + 
-					"/" + endTime;
-
+		var endpoint = genQuery(symbol, startTime, endTime);
 		console.log (endpoint);
 		fetch(endpoint)
 		  .then(function(response) {
 		    return response.json();
 		  })
 		  .then(function(myJson) {
-
 		  	setNodata(true)
-		    //console.log(JSON.stringify(myJson));
+		    console.log(JSON.stringify(myJson));
 		    var data = [];
 		    myJson[symbol].forEach(function(e){
 		    	var date = e["date"];
@@ -74,6 +65,7 @@ const Graphs = () =>
 		    	data.push({"x" : new Date(newdate), "y": e["close_price"]})
 		    	setNodata(false)
 		    });
+		    console.log(data)
 		    setGraphData(data);
 		  })
 		  .catch(function(error){
@@ -83,74 +75,23 @@ const Graphs = () =>
 		setLoading(false);
 	}
 
-	function genGraph () {
-		if(nodata){
-			return (<div>
-				<h1 style={{ color: 'black' }}> NO DATA FOUND </h1>
-				</div>)
-		}
-		if(loading)
-		{
-			return (<div>
-					<h1> LOADING </h1>
-					</div>)
-		}
-		else
-		{
-			return (
-
-				<XYPlot
-						xType='time'
-		                width={Data.chartWidth}
-		                height={Data.chartHeight}>
-		                <VerticalGridLines />
-		                <HorizontalGridLines / >
-		                <XAxis />
-		                <YAxis />
-		                <LineSeries
-
-				            fill="none"
-				            color="red"
-				            data={graphData}
-				          />
-	            	</XYPlot>)
-		}
-	}
+	
 	var datePlaceholder = "YYYY-MM-DD"
-	return (
-		<Page>
-		    <div style={{textAlign: "center", background:'#fff', opacity:.7}}>
-		      <PageHeader text={Data.navbar_items[0][0]}/>
-			  <div style={{height:30}}/>
-			  <Grid container spacing={0}>
-		        <Grid item xs={12}>
-		        <div>
-			        <MyTextField name={"Symbol"} onChange={(e)=> setSymbol(e.target.value)}/>
-			        <span> &nbsp; &nbsp; </span>
-			        <MyTextField name={"Start Date"} placeholder = {datePlaceholder} onChange={(e)=> setStartTime(e.target.value)}/>
-				    <span> &nbsp; &nbsp; </span>
-				    <MyTextField name={"End Date"} placeholder = {datePlaceholder}  onChange={(e) => setEndTime(e.target.value)}/>
-				    {/*<MyDropDown items={Data.timeperioditems} 
-				      flavorText={"Time Period:"} 
-				      formControl={classes.formControl} 
-				      setItem={setTimePeriod}/> */}
-				</div>
-			      	<div style={{height:10}}/>
-			        <div style={{height:100}}>
-			      		<Button type="button" color="primary" onClick={sendQuery}>
-			      			<h2>Search</h2>
-			      		</Button>
-					</div>
 
-		        </Grid>
-		       </Grid>
-		       <div style={{display:'flex', flexDirection:'column', alignItems:"center", justifyContent:"center"}}>
-			        {genGraph()}
-	            	<div style={{height:90}}/>
-            	</div>
-            	</div>
-		</Page>
-	);
+	const searchArea =
+				<div>
+			        <MyTextField name={"Symbol"} defaultValue={symbol} onChange={(e)=> setSymbol(e.target.value)}/>
+			        <span> &nbsp; &nbsp; </span>
+			        <MyTextField name={"Start Date"} defaultValue={startTime} placeholder = {datePlaceholder} onChange={(e)=> setStartTime(e.target.value)}/>
+				    <span> &nbsp; &nbsp; </span>
+				    <MyTextField name={"End Date"} defaultValue={endTime} placeholder = {datePlaceholder}  onChange={(e) => setEndTime(e.target.value)}/>
+				</div>
+				;
+			
+	const genlineseries = [graphData];
+	
+
+	return ( genGraphPage(Data.navbar_items[0][0], searchArea, sendQuery, nodata, loading, genlineseries));
 }
 
 export default Graphs

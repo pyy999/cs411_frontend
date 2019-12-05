@@ -65,7 +65,7 @@ const Uploads = () =>
 	return (
 		<Page>
 		    <div style={{textAlign: "center", background:'#fff', opacity:.7}}>
-		      <PageHeader text={Data.navbar_items[1][0]}/>
+		      <PageHeader text={Data.navbar_items[5][0]}/>
 			  <div style={{height:30}}/>
 			  <Grid container spacing={0}>
 		        <Grid item xs={12}>

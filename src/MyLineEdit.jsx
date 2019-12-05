@@ -41,6 +41,7 @@ const MyTextField = (props) => {
 	          margin="normal"
 	          placeholder={props.placeholder}
 	          onChange={props.onChange}
+	          defaultValue={props.defaultValue}
 	        />
    
       )
