@@ -16,6 +16,7 @@ import Delete from './Delete.jsx'
 import Disagrees from './Disagrees.jsx'
 import Company from './Company.jsx'
 import Popularity from './Popularity.jsx'
+import Keywords from './Keywords.jsx'
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 import * as Data from './data.js';
@@ -60,6 +61,8 @@ function App() {
                             <Route path={Data.navbar_items[2][1]} component={Disagrees} />
                             <Route path={Data.navbar_items[4][1]} component={Company} />
                             <Route path={Data.navbar_items[3][1]} component={Popularity} />
+
+                            <Route path={Data.navbar_items[7][1]} component={Keywords} />
                           </Switch>
                         )}
                       />

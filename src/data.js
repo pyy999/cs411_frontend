@@ -12,6 +12,7 @@ export const delete_endpoint = ip + '/delete_tick_data/';
 export const dis_endpoint = ip + '/subreddit_sentiment_disagreement'
 export const count_endpoint = ip + '/sentiment_count'
 export const poplularity_endpoint = ip + '/sentiment_popularity_correlation';
+export const keywords_endpoint = ip + '/company_keywords';
 //export const database_endpoint = 'http://172.22.158.49:8000/tick_data/';
 
 export const navbar_items = [
@@ -21,7 +22,8 @@ export const navbar_items = [
 	["Sentiment Popularity Corellation", "/popularity"],
 	["Company Sentiment", "/company"],
 	["Upload Data","/upload"],
-	["Delete Data","/delete"]
+	["Delete Data","/delete"],
+	["Keywords", "/keywords"]
 ]
 
 export const timeperioditems = 
