@@ -49,9 +49,9 @@ const Delete = () =>
 		setLoading(true);
 
 		var endpoint = Data.delete_endpoint + 
-					symbol + 
-					"/" + startTime + 
-					"/" + endTime;
+					"?stock_symbol=" + symbol + 
+					"&start_date=" + startTime + 
+					"&end_date=" + endTime;
 
 		console.log (endpoint);
 		fetch(endpoint)

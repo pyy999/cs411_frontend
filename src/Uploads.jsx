@@ -48,7 +48,7 @@ const Uploads = () =>
 		setLoading(true);
 
 		var endpoint = Data.upload_endpoint  + 
-					symbol;
+					"?stock_symbol="+symbol
 					//  + 
 					// "/" + startTime + 
 					// "/" + price;
